@@ -68,7 +68,10 @@ class BaseUnit(ABC):
         self.unit_class.skill.use(user=self, target=target)
         и уже эта функция вернем нам строку которая характеризует выполнение умения
         """
-        pass
+        if self._is_skill_used:
+            return "Навык уже использован!"
+        self._is_skill_used = True
+        return self.unit_class.skill.use(self, target)
 
 
 class PlayerUnit(BaseUnit):
