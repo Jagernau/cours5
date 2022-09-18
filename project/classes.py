@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from project.skills import FuryPunch, Skill, HardShot
 
+
 @dataclass
 class UnitClass:
     name: str
@@ -11,14 +12,28 @@ class UnitClass:
     armor: float
     skill: Skill
 
-#Интциализация экз. класса UnitClass под персонажи
-WarriorClass = UnitClass(name="Воин",max_health=60.0,max_stamina=30.0,attack=0.8,stamina=0.9, armor=1.2,skill=FuryPunch())
 
-ThiefClass = UnitClass(name="Вор", max_health=50.0, max_stamina=25.0, attack=1.5, stamina=1.2, armor=1.0, skill=HardShot())
+# Интциализация экз. класса UnitClass под персонажи
+WarriorClass = UnitClass(
+    name="Воин",
+    max_health=60.0,
+    max_stamina=30.0,
+    attack=0.8,
+    stamina=0.9,
+    armor=1.2,
+    skill=FuryPunch(),
+)
+
+ThiefClass = UnitClass(
+    name="Вор",
+    max_health=50.0,
+    max_stamina=25.0,
+    attack=1.5,
+    stamina=1.2,
+    armor=1.0,
+    skill=HardShot(),
+)
 
 
-#Экземпляр какие есть персонажи
-unit_classes = {
-    ThiefClass.name: ThiefClass,
-    WarriorClass.name: WarriorClass
-}
+# Экземпляр какие есть персонажи
+unit_classes = {ThiefClass.name: ThiefClass, WarriorClass.name: WarriorClass}

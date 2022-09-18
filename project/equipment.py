@@ -31,8 +31,8 @@ class EquipmentData:
     weapons: List[Weapon]
     armors: List[Armor]
 
-class Equipment:
 
+class Equipment:
     def __init__(self):
         self.equipment = self._get_equipment_data()
 
@@ -41,7 +41,6 @@ class Equipment:
 
     def get_armor(self, armor_name) -> Optional[Armor]:
         return [a for a in self.equipment.armors if a.name == armor_name][0]
-        
 
     def get_weapons_names(self) -> list:
         return [w.name for w in self.equipment.weapons]
@@ -50,7 +49,7 @@ class Equipment:
         return [a.name for a in self.equipment.armors]
 
     @staticmethod
-    def _get_equipment_data() -> EquipmentData:
+    def _get_equipment_data() -> Optional[EquipmentData]:
         equipment_file = open("./data/equipment.json", encoding="utf-8")
         data = json.load(equipment_file)
         equipment_schema = marshmallow_dataclass.class_schema(EquipmentData)

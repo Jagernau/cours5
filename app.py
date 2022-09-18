@@ -55,13 +55,13 @@ def end_fight():
     return render_template("index.html", heroes=heroes)
 
 
-@app.route("/choose-hero/", methods=['post', 'get'])
+@app.route("/choose-hero/", methods=["post", "get"])
 def choose_hero():
     if request.method == "GET":
         result = {
             "classes": unit_classes,
             "weapons": equipment.get_weapons_names(),
-            "armors" : equipment.get_armors_names(),
+            "armors": equipment.get_armors_names(),
             "header": "Выберите героя",
         }
         return render_template("hero_choosing.html", result=result)
@@ -75,15 +75,18 @@ def choose_hero():
         player.equip_weapon(equipment.get_weapon(weapon_name))
         player.equip_armor(equipment.get_armor(armor_name))
         heroes["player"] = player
-        return redirect(url_for('choose_enemy'))
+        return redirect(url_for("choose_enemy"))
 
 
-@app.route("/choose-enemy/", methods=['post', 'get'])
+@app.route("/choose-enemy/", methods=["post", "get"])
 def choose_enemy():
     if request.method == "GET":
-        result = {'classes': unit_classes, 'weapons': equipment.get_weapons_names(),
-                  'armors': equipment.get_armors_names(), 'header': 'Выберите противника',
-                  }
+        result = {
+            "classes": unit_classes,
+            "weapons": equipment.get_weapons_names(),
+            "armors": equipment.get_armors_names(),
+            "header": "Выберите противника",
+        }
         return render_template("hero_choosing.html", result=result)
 
     if request.method == "POST":
@@ -95,7 +98,7 @@ def choose_enemy():
         enemy.equip_weapon(equipment.get_weapon(weapon_name))
         enemy.equip_armor(equipment.get_armor(armor_name))
         heroes["enemy"] = enemy
-        return redirect(url_for('start_fight'))
+        return redirect(url_for("start_fight"))
 
 
 if __name__ == "__main__":

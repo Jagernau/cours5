@@ -10,6 +10,7 @@ class BaseUnit(ABC):
     """
     Базовый класс юнита
     """
+
     def __init__(self, name: str, unit_class: UnitClass):
         """
         При инициализации класса Unit используем свойства класса UnitClass
@@ -75,7 +76,6 @@ class BaseUnit(ABC):
 
 
 class PlayerUnit(BaseUnit):
-
     def hit(self, target: BaseUnit) -> str:
         """
         функция удар игрока:
@@ -87,13 +87,18 @@ class PlayerUnit(BaseUnit):
             return f"{self.name} попытался использовать {self.weapon.name}, но у него не хватило выносливости."
         damage = self._count_damage(target)
         if damage > 0:
-            return f"{self.name} используя {self.weapon.name} пробивает {target.armor.name} соперника и наносит {damage} урона. "
+            return (
+                f"{self.name} используя {self.weapon.name} пробивает "
+                f"{target.armor.name} соперника и наносит {damage} урона. "
+            )
 
-        return f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его " \
-               f"останавливает. "
+        return (
+            f"{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name} cоперника его "
+            f"останавливает. "
+        )
+
 
 class EnemyUnit(BaseUnit):
-
     def hit(self, target: BaseUnit) -> str:
         """
         функция удар соперника
@@ -103,7 +108,11 @@ class EnemyUnit(BaseUnit):
         Если умение не применено, противник наносит простой удар, где также используется
         функция _count_damage(target
         """
-        if not self._is_skill_used and self.stamina >= self.unit_class.skill.stamina and randint(0, 100) < 10:
+        if (
+            not self._is_skill_used
+            and self.stamina >= self.unit_class.skill.stamina
+            and randint(0, 100) < 10
+        ):
             return self.use_skill(target)
 
         if self.stamina * self.unit_class.stamina < self.weapon.stamina_per_hit:
@@ -111,7 +120,12 @@ class EnemyUnit(BaseUnit):
 
         damage = self._count_damage(target)
         if damage > 0:
-            return f"\n{self.name} используя {self.weapon.name} пробивает {target.armor.name} и наносит Вам {damage} урона. "
+            return (
+                f"\n{self.name} используя {self.weapon.name} пробивает "
+                f"{target.armor.name} и наносит Вам {damage} урона. "
+            )
 
-        return f"\n{self.name} используя {self.weapon.name} наносит удар, но {target.armor.name}  это  останавливает."
-
+        return (
+            f"\n{self.name} используя {self.weapon.name} "
+            f"наносит удар, но {target.armor.name}  это  останавливает."
+        )

@@ -1,5 +1,6 @@
 from project.unit import BaseUnit
 
+
 class BaseSingleton(type):
     _instances = {}
 
@@ -17,7 +18,7 @@ class Arena(metaclass=BaseSingleton):
     game_is_running = False
     battle_result = None
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
         self.player = player
         self.enemy = enemy
         self.game_is_running = True
@@ -34,10 +35,9 @@ class Arena(metaclass=BaseSingleton):
 
         return self._end_game()
 
-
     def _stamina_regeneration(self):
         units = (self.player, self.enemy)
-        for  unit in units:
+        for unit in units:
             if unit.stamina + self.STAMINA_PER_ROUND > unit.unit_class.max_stamina:
                 unit.stamina = unit.unit_class.max_stamina
             else:
@@ -52,17 +52,17 @@ class Arena(metaclass=BaseSingleton):
             self._stamina_regeneration()
             return self.enemy.hit(self.player)
 
-    def _end_game(self):
+    def _end_game(self) -> str:
         self._instances = {}
         self.game_is_running = False
         return self.battle_result
 
-    def player_hit(self):
+    def player_hit(self) -> str:
         result = self.player.hit(self.enemy)
         turn_result = self.next_turn()
         return f"{result}\n{turn_result}"
 
-    def player_use_skill(self):
+    def player_use_skill(self) -> str:
         result = self.player.use_skill(self.enemy)
         turn_result = self.next_turn()
         return f"{result}\n{turn_result}"
